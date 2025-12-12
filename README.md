@@ -2,12 +2,6 @@
 
 SUGARFuseNet: Diffusion‑Driven Domain Adaptation and Bimodal Bitemporal Fusion for Advancing Global Landslide Segmentation on the novel GBMT‑SLID dataset.
 
-Repository for the paper:
-SUGARFuseNet: Diffusion‑Driven Domain Adaptation and Bimodal Bitemporal Fusion for Advancing Global Landslide Segmentation on novel GBMT‑SLID dataset.
-
-Author / maintainer: Franck-Emani  
-Contact: franckemani@yahoo.ca
-
 Contents
 - Overview
 - Data preprocessing
@@ -78,14 +72,7 @@ Our two-stage Data Enhancement Strategy (DES):
    - Operates after cDMT to produce multiple plausible augmented post-event samples for a given scene.
    - Parameters to tune: sampling steps, guidance scale, seed control.
 
-Scripts (examples):
-- Diffusion based data enhancement/
-  - cDMT_train.py          # train conditional diffusion translator
-  - cDMT_translate.py      # translate pre->post using change mask
-  - ddim_augment.py        # DDIM sampling wrapper for augmentation
-  - augmentation_catalog.json # metadata for augmented samples
-
-Model zoo
+Model
 ---------
 - SUGARFuseNet (primary)
   - Dual-branch encoder handling bimodal-bitemporal inputs (pre/post optical + DEM)
@@ -111,66 +98,6 @@ Requirements (example)
 - Python >= 3.8
 - Tensorflow >= 2.10 (CUDA-enabled)
 - numpy, rasterio, GDAL, tqdm, scikit-learn, scikit-image
-
-Install (suggested)
-```
-# recommended: create conda env
-conda create -n sugarfuse python=3.9
-conda activate sugarfuse
-pip install -r requirements.txt
-```
-
-Typical training commands (replace paths and hyperparams as needed):
-```
-# Train SUGARFuseNet
-python Models/sugarfuse/train.py \
-  --data_root /path/to/GBMT-SLID \
-  --train_list data/train_list.txt \
-  --val_list data/val_list.txt \
-  --batch_size 8 \
-  --epochs 100 \
-  --lr 1e-4 \
-  --save_dir ./exp/sugarfuse_run1 \
-  --use_dem True \
-  --pretrained_backbone True
-```
-
-Checkpointing & logging:
-- Checkpoints are saved under exp/<experiment>/checkpoints
-- TensorBoard logs under exp/<experiment>/runs
-- We recommend saving best-by-IoU and periodic snapshots.
-
-Evaluation metrics (per-pixel)
-- Precision, Recall, F1-score (we use landslide class F1 as primary metric)
-- Intersection over Union (IoU)
-- Average Precision may be provided as supplementary
-
-Inference & evaluation
-----------------------
-Inference scripts:
-- Inference/predict.py
-  - Accepts model checkpoint, test list, sliding-window settings, and outputs predicted masks (uint8 0/1).
-- Inference/postprocess.py
-  - Morphological filtering, small-object removal, vectorization helpers.
-
-Example inference command:
-```
-python Inference/predict.py \
-  --checkpoint ./exp/sugarfuse_run1/checkpoints/best_iou.pth \
-  --data_root /path/to/GBMT-SLID \
-  --test_list data/test_list.txt \
-  --out_dir ./predictions/testset \
-  --tile_size 256 --stride 128
-```
-
-Evaluation example:
-```
-python Inference/eval.py \
-  --pred_dir ./predictions/testset \
-  --gt_dir /path/to/GBMT-SLID/test/mask \
-  --metrics f1,iou,precision,recall \
-  --save_report ./exp/sugarfuse_run1/eval_report.json
-```
 
 Reproducibility & Unseen ROI inference
 - We include scripts used in the paper to run inference on 5 unseen ROIs: DRC, Uganda, Myanmar, Philippines, Colombia.
@@ -233,7 +160,7 @@ Contributions are welcome: open issues for bugs/feature requests and submit PRs.
 
 Contact
 -------
-Author: Nattabifir  
+Author: Franck EMANI  
 GitHub: https://github.com/Nattabifir  
-Email: (add your email if you wish)
+Email: franckemani@yahoo.ca
 
