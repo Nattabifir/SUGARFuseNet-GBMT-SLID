@@ -1,0 +1,12 @@
+# Example minimal requirements - adjust exact versions to your environment
+torch>=1.10
+torchvision
+tqdm
+rasterio
+numpy
+scikit-image
+scikit-learn
+timm
+diffusers
+transformers
+matplotlib
